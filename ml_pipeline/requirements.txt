@@ -1,0 +1,10 @@
+joblib
+matplotlib
+mcculw
+numpy
+pandas
+PyWavelets
+pyserial
+scikit-learn
+scipy
+seaborn

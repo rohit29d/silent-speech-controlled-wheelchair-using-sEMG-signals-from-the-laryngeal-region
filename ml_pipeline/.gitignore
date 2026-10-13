@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs and local outputs
+*.log
+outputs/models/*.joblib
+outputs/models/*.pkl
+outputs/reports/*.csv
+outputs/plots/*.png
+outputs/plots/*.jpg
+
+# Build artifacts
+build/
+dist/
+*.egg-info/

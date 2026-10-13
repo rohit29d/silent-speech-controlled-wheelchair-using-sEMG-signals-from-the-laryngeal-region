@@ -1,0 +1,62 @@
+# ==============================================================================
+# Git Ignore Rules for sEMG Silent-Speech Assistive Wheelchair System
+# ==============================================================================
+
+# 1. Large Media & Raw Demonstration Recordings
+# Note: Full-length video recordings are hosted on Google Drive (see README.md)
+*.mp4
+*.m4v
+*.mov
+*.avi
+*.mkv
+*.webm
+Output videos/
+videos/
+
+# 2. STM32CubeIDE / Embedded C Build Artifacts & Binaries
+**/Debug/
+**/Release/
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.o
+*.d
+*.su
+*.cyclo
+*.launch
+
+# 3. Python Cache, Environments, and Testing
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# 4. KiCad EDA Backups and Lock Files
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*.kicad_prl-bak
+*-save.kicad_sch
+*-save.kicad_pcb
+*.lck
+fp-info-cache
+
+# 5. LTspice Simulation Binary Traces (Keep .asc, ignore raw traces)
+*.raw
+*.op.raw
+*.fft
+*.log
+
+# 6. Operating System Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini

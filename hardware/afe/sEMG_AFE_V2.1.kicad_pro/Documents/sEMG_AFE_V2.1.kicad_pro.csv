@@ -1,0 +1,16 @@
+"Id";"Designator";"Footprint";"Quantity";"Designation";"Supplier and ref";
+1;"C6,C3,C4,C10,C5,C8,C9,C7,C2,C1";"C_1206_3216Metric";10;"1u";;;
+2;"R2,R4,R6,R7";"R_1206_3216Metric";4;"100k";;;
+3;"U4,U3,U2,U5,U1";"JEITA_SOIC-8_3.9x4.9mm_P1.27mm";5;"LM741";;;
+4;"R3,R28,R8";"R_1206_3216Metric";3;"1k";;;
+5;"R27";"R_1206_3216Metric";1;"1.5k";;;
+6;"R9,R10";"R_1206_3216Metric";2;"6.8k";;;
+7;"R14,R18,R1,R5,R22";"R_1206_3216Metric";5;"10k";;;
+8;"JP1,JP2";"PinHeader_1x02_P2.54mm_Vertical";2;"Jumper_2_Bridged";;;
+9;"R15,R19,R23";"R_1206_3216Metric";3;"20k";;;
+10;"R20,R21";"R_1206_3216Metric";2;"270";;;
+11;"R17,R13,R12,R16";"R_1206_3216Metric";4;"330";;;
+12;"R25,R24,R11";"R_1206_3216Metric";3;"3.3k";;;
+13;"C11";"C_1206_3216Metric";1;"2.2u";;;
+14;"R26";"R_1206_3216Metric";1;"1.2k";;;
+15;"J1";"SOIC-14_3.9x8.7mm_P1.27mm";1;"Conn_01x14_Pin";;;

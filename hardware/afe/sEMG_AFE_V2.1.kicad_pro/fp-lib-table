@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "LM324_SMD") (type "KiCad") (uri "${KIPRJMOD}/Library/LM324NSRE4/LM324NSRE4.pretty") (options "") (descr ""))
+)
