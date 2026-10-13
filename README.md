@@ -253,28 +253,6 @@ Hands-Free-sEMG-based-speech-controlled-wheelchair/
 
 ---
 
-## 7. Replication & Getting Started
-
-### Hardware Simulation
-1. Install [LTspice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html).
-2. Open any schematic in `hardware/simulations/` (e.g. `bessel_final_4th_order_bpf.asc`).
-3. Run **Simulate $\rightarrow$ Run** to observe AC frequency response and notch depth.
-
-### Python Environment & Model Training
-```bash
-# Clone the repository
-git clone https://github.com/rohit29d/Hands-Free-sEMG-based-speech-controlled-wheelchair-.git
-cd Hands-Free-sEMG-based-speech-controlled-wheelchair-/ml_pipeline
-
-# Setup virtual environment
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# Execute pipeline
-python run_pipeline.py
-```
-
 ### Firmware Build & Flash
 1. Open **STM32CubeIDE** (v1.14+ recommended).
 2. Import project from `firmware/stm32h7_controller/model_testing`.
