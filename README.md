@@ -3,7 +3,7 @@
 [![Hardware Status](https://img.shields.io/badge/Hardware-Fabricated%20%26%20Bench--Validated-success?style=flat-square)](hardware/)
 [![MCU Target](https://img.shields.io/badge/MCU-ARM%20Cortex--M7%20(STM32H753ZI)-blue?style=flat-square)](firmware/)
 [![ML Pipeline](https://img.shields.io/badge/ML%20Inference-Random%20Forest%20%2B%20ANOVA-orange?style=flat-square)](ml_pipeline/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-Showcase%20%26%20Evaluation%20Only-red?style=flat-square)](LICENSE)
 
 A complete end-to-end biomedical and cyber-physical assistive navigation platform that translates surface electromyography (sEMG) bio-potentials from laryngeal musculature during silent articulation into real-time directional commands for an electric wheelchair. 
 
@@ -203,7 +203,7 @@ Live experimental trials were conducted verifying the end-to-end integration:
 ```text
 Hands-Free-sEMG-based-speech-controlled-wheelchair/
 ├── README.md                                  # Complete academic system documentation
-├── LICENSE                                    # MIT License
+├── LICENSE                                    # Showcase & Evaluation License (All Rights Reserved)
 ├── .gitignore                                 # Build rules for STM32, KiCad, Python, & media
 │
 ├── hardware/                                  # ANALOG FRONT-END HARDWARE MODULE
