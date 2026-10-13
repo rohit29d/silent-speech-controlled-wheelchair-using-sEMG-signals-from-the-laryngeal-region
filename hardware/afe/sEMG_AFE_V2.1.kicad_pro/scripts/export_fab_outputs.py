@@ -18,7 +18,7 @@ Requirements:
     - Optional: pcbnew Python module for zone refilling
 """
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 
 import os
 import re
@@ -26,6 +26,7 @@ import sys
 import time
 import shutil
 import logging
+import argparse
 import subprocess
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -220,32 +221,69 @@ def run_erc(sch_file, output_dir):
 
 
 def run_drc(pcb_file, output_dir):
-    """Run Design Rules Check; fail on non-excluded errors."""
+    """Run DRC with detailed error reporting, category breakdown, and exception handling."""
     out = os.path.join(output_dir, "drc_report.txt")
     if not os.path.exists(pcb_file):
         logger.error(f"❌ PCB file not found: {pcb_file}")
         return False
 
     cmd = ["kicad-cli", "pcb", "drc", pcb_file, "--output", out, "--severity-all"]
-    if not run_command(cmd, out):
+    success = run_command(cmd, out)
+    if not success:
         return False
 
     try:
-        with open(out, "r", encoding="utf-8") as f:
-            content = f.read()
-        for line in content.splitlines():
-            if "** Found" in line and "DRC violations **" in line:
-                match = re.search(r"Found (\d+) DRC violations", line)
-                if match and int(match.group(1)) > 0:
-                    non_excluded = [
-                        l for l in content.splitlines()
-                        if "; error" in l and "(excluded)" not in l
-                    ]
-                    if non_excluded:
-                        logger.error(
-                            f"DRC found {len(non_excluded)} non-excluded error(s). See: {out}"
-                        )
-                        return False
+        if os.path.exists(out):
+            with open(out, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            for line in content.splitlines():
+                if "** Found" in line and "DRC violations **" in line:
+                    from collections import defaultdict
+                    match = re.search(r"Found (\d+) DRC violations", line)
+                    if match and int(match.group(1)) > 0:
+                        lines = content.splitlines()
+                        error_types = defaultdict(lambda: {"excluded": 0, "non_excluded": 0})
+                        warning_types = defaultdict(lambda: {"excluded": 0, "non_excluded": 0})
+                        current_type = None
+
+                        for l in lines:
+                            type_match = re.match(r"^\[([^\]]+)\]:", l)
+                            if type_match:
+                                current_type = type_match.group(1)
+                            elif current_type and "; error" in l:
+                                key = "excluded" if "(excluded)" in l else "non_excluded"
+                                error_types[current_type][key] += 1
+                                current_type = None
+                            elif current_type and "; warning" in l:
+                                key = "excluded" if "(excluded)" in l else "non_excluded"
+                                warning_types[current_type][key] += 1
+                                current_type = None
+
+                        total_errors_excluded = sum(v["excluded"] for v in error_types.values())
+                        total_errors_non_excluded = sum(v["non_excluded"] for v in error_types.values())
+                        total_warnings_excluded = sum(v["excluded"] for v in warning_types.values())
+                        total_warnings_non_excluded = sum(v["non_excluded"] for v in warning_types.values())
+
+                        logger.info(f"DRC Summary: {match.group(1)} total violations")
+                        logger.info(f"  Errors: {total_errors_non_excluded} non-excluded, {total_errors_excluded} excluded")
+                        logger.info(f"  Warnings: {total_warnings_non_excluded} non-excluded, {total_warnings_excluded} excluded")
+
+                        if error_types:
+                            logger.info("Error breakdown by type:")
+                            for error_type in sorted(error_types.keys()):
+                                counts = error_types[error_type]
+                                logger.info(f"  [{error_type}]: {counts['non_excluded']} non-excluded, {counts['excluded']} excluded")
+
+                        if warning_types:
+                            logger.info("Warning breakdown by type:")
+                            for warning_type in sorted(warning_types.keys()):
+                                counts = warning_types[warning_type]
+                                logger.info(f"  [{warning_type}]: {counts['non_excluded']} non-excluded, {counts['excluded']} excluded")
+
+                        if total_errors_non_excluded > 0:
+                            logger.error(f"DRC found {total_errors_non_excluded} non-excluded error(s). See: {out}")
+                            return False
     except IOError as e:
         logger.error(f"❌ Cannot read DRC report: {e}")
         return False
@@ -254,7 +292,8 @@ def run_drc(pcb_file, output_dir):
         logger.warning("Continuing but DRC validation may be incomplete.")
         return True
 
-    return True
+    return success
+
 
 
 # -------------------- Export Functions --------------------
@@ -479,6 +518,16 @@ Download and open [ibom.html]({rel(os.path.join(output_dir, 'ibom', 'ibom.html')
 
 # -------------------- Main Orchestration --------------------
 def main():
+    parser = argparse.ArgumentParser(
+        description="Automated KiCad Project Fabrication Outputs Exporter",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__
+    )
+    parser.add_argument("--skip-erc", action="store_true", help="Skip ERC schematic verification")
+    parser.add_argument("--skip-drc", action="store_true", help="Skip DRC PCB verification")
+    parser.add_argument("--workers", "-w", type=int, default=4, help="Parallel worker threads (default: 4)")
+    args = parser.parse_args()
+
     start_time = time.time()
     logger.info(f"Starting export for project: {PROJECT_NAME}")
     check_dependencies()
@@ -495,21 +544,27 @@ def main():
         sys.exit(1)
 
     # --- Sequential: checks must pass before generating outputs ---
-    logger.info("Running ERC (Electrical Rules Check)...")
-    if not run_erc(sch_file, OUTPUT_DIR):
-        logger.error("❌ ERC failed. Fix schematic errors before generating outputs.")
-        sys.exit(1)
-    logger.info("✅ ERC passed")
+    if not args.skip_erc:
+        logger.info("Running ERC (Electrical Rules Check)...")
+        if not run_erc(sch_file, OUTPUT_DIR):
+            logger.error("❌ ERC failed. Fix schematic errors before generating outputs.")
+            sys.exit(1)
+        logger.info("✅ ERC passed")
+    else:
+        logger.warning("⚠️  Skipping ERC as requested by --skip-erc")
 
     if not refill_zones(pcb_file):
         logger.error("❌ Zone refill failed. Cannot proceed with DRC.")
         sys.exit(1)
 
-    logger.info("Running DRC (Design Rules Check)...")
-    if not run_drc(pcb_file, OUTPUT_DIR):
-        logger.error("❌ DRC failed. Fix PCB errors before generating outputs.")
-        sys.exit(1)
-    logger.info("✅ DRC passed")
+    if not args.skip_drc:
+        logger.info("Running DRC (Design Rules Check)...")
+        if not run_drc(pcb_file, OUTPUT_DIR):
+            logger.error("❌ DRC failed. Fix PCB errors before generating outputs.")
+            sys.exit(1)
+        logger.info("✅ DRC passed")
+    else:
+        logger.warning("⚠️  Skipping DRC as requested by --skip-drc")
 
     # --- Parallel: all export tasks ---
     tasks = [
@@ -527,7 +582,7 @@ def main():
 
     failed_tasks = []
     try:
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
             future_to_task = {
                 executor.submit(func, *params): func.__name__
                 for func, params in tasks

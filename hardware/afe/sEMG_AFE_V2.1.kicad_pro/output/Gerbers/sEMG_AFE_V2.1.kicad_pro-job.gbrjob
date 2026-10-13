@@ -3,14 +3,14 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "9.0.6"
+      "Version": "10.0.7-10.0.7~ubuntu26.04.1"
     },
-    "CreationDate": "2026-02-21T13:16:31+05:30"
+    "CreationDate": "2026-10-13T20:52:40+05:30"
   },
   "GeneralSpecs": {
     "ProjectId": {
-      "Name": "Trying",
-      "GUID": "54727969-6e67-42e6-9b69-6361645f7063",
+      "Name": "sEMG_AFE_V2.1.kicad_pro",
+      "GUID": "73454d47-5f41-4464-955f-56322e312e6b",
       "Revision": "rev?"
     },
     "Size": {
@@ -34,47 +34,47 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "Trying-F_Cu.gtl",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-F_Cu.gtl",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-B_Cu.gbl",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-B_Cu.gbl",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-F_Paste.gtp",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-F_Paste.gtp",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-B_Paste.gbp",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-B_Paste.gbp",
       "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-F_Silkscreen.gto",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-F_Silkscreen.gto",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-B_Silkscreen.gbo",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-B_Silkscreen.gbo",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "Trying-F_Mask.gts",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-F_Mask.gts",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Trying-B_Mask.gbs",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-B_Mask.gbs",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "Trying-Edge_Cuts.gm1",
+      "Path": "sEMG_AFE_V2.1.kicad_pro-Edge_Cuts.gm1",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }

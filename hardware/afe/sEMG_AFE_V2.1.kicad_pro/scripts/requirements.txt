@@ -1,0 +1,13 @@
+# KiCad Fabrication Output Generator - Python Dependencies
+
+# Required for BOM Excel export
+pandas>=2.0.0
+openpyxl>=3.0.0
+
+# Optional: Interactive HTML BOM generator
+InteractiveHtmlBom>=2.12.0
+
+# Note: pcbnew (KiCad Python module) is NOT installed via pip
+# It comes bundled with KiCad installation. To use it:
+# - Run this script with KiCad's Python: /usr/bin/python3
+# - Or create a venv with --system-site-packages (handled automatically by Makefile)

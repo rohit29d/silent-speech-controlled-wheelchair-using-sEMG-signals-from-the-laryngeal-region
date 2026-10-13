@@ -103,20 +103,17 @@ python3 scripts/run_checks.py --output reports/   # custom report directory
 
 ---
 
-## 🔁 Makefile Integration
+## 🔁 Makefile Targets
 
-```makefile
-.PHONY: check fab release
+The project includes an automated Makefile that manages virtual environments (`~/.venvs/kicad`) and package dependencies automatically:
 
-check:
-	python3 scripts/run_checks.py
-
-fab:
-	python3 scripts/export_fab_outputs.py
-
-release: fab
-	cd output && zip -r ../$(shell basename $(CURDIR))-gerbers.zip Gerbers/
-```
+| Target | Command | Description |
+|---|---|---|
+| `all` / `fab` | `make` or `make fab` | Runs ERC → DRC → parallel export of all fabrication outputs |
+| `check` | `make check` | Runs standalone ERC and DRC verification |
+| `buy` | `make buy` | Generates procurement BOM (`.csv` + `.xlsx`) & pick-and-place pos file in `pcbpower/` |
+| `release` | `make release` | Runs export and packages Gerbers into a `_Gerbers.zip` archive |
+| `clean` | `make clean` | Removes generated archives and temporary build files |
 
 ---
 
