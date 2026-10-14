@@ -1,18 +1,54 @@
+ACADEMIC EVALUATION & RESEARCH LICENSE (NON-COMMERCIAL)
+
 Copyright (c) 2026 Rohit Kumar Dubbaka. All Rights Reserved.
+Department of Electronics and Communication Engineering
+Amrita Vishwa Vidyapeetham, Coimbatore, India.
 
-SHOWCASE & EVALUATION LICENSE
+This repository, including all source code, firmware, analog/digital schematics, 
+PCB layouts, 3D models, simulation files, datasets, and documentation, represents 
+original undergraduate capstone thesis research (Conference Manuscript publication in Progress).
 
-This repository and all associated materials (including, without limitation, source code, firmware, analog/digital schematics, PCB layouts, simulation models, datasets, and documentation) are made publicly available solely for portfolio demonstration, academic admissions review, and technical evaluation purposes.
+1. PERMITTED ACADEMIC EVALUATION:
+   Permission is hereby granted, free of charge, to any individual or institution 
+   to access, inspect, and evaluate this work for the purposes of:
+   - Graduate admissions assessment and academic review.
+   - Peer evaluation, educational reference, and academic citation.
+   - Non-commercial personal study and inspection.
 
-1. PERMITTED USE:
-   You may view, inspect, and evaluate the contents of this repository for personal review, employment evaluation, or graduate admissions assessment.
+2. RESERVATION OF RIGHTS & RESTRICTIONS:
+   - Academic Priority & Non-Commercial Use: This work is made available strictly 
+     for non-commercial, academic review. No commercial use, sale, or distribution 
+     is permitted without prior written authorization from the copyright holder.
+   - Hardware Fabrication & Distribution: Physical manufacturing, assembly, or 
+     third-party redistribution of the custom printed circuit boards (PCBs) or 
+     derivative hardware systems is not permitted without explicit permission.
+   - Citation & Attribution: Any academic reference or study deriving insights from 
+     this architecture must cite the author and repository.
 
-2. RESTRICTIONS:
-   - No Reproduction or Redistribution: You may not copy, duplicate, reproduce, republish, mirror, or redistribute any part of this repository in any medium without prior written consent.
-   - No Derivative Works: You may not modify, adapt, translate, reverse-engineer, or create derivative works based on this project.
-   - No Hardware Fabrication: You may not manufacture, fabricate, assemble, or order printed circuit boards (PCBs) or physical devices based on the designs, schematics, or Gerber files provided herein.
-   - No Commercial Use: Commercial exploitation, distribution, or monetization of any kind is strictly prohibited.
+3. RESEARCH COLLABORATION & INQUIRIES:
+   The author actively welcomes research inquiries, academic collaboration, and 
+   requests for expanded dataset access or hardware replication protocols.
 
-Any other use, including research replication, hardware reproduction, or integration into other projects, requires prior written permission from the copyright holder.
+4. DISCLAIMER OF WARRANTY & MEDICAL / PHYSICAL SAFETY LIABILITY:
+   - AS-IS Provision: THE MATERIALS AND DESIGNS IN THIS REPOSITORY ARE PROVIDED 
+     "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT 
+     NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
+     PURPOSE, OR NON-INFRINGEMENT.
+   - Experimental Research Prototype: This system is an experimental proof-of-concept 
+     prototype developed exclusively for engineering research and educational purposes. 
+     It is NOT a certified medical device, has not received regulatory clearance 
+     (e.g., FDA, CE-MDR), and must NEVER be used for clinical diagnosis, patient 
+     treatment, life-critical applications, or unsupervised assistive mobility.
+   - Limitation of Liability: IN NO EVENT SHALL THE AUTHOR, COLLABORATORS, OR 
+     AFFILIATED INSTITUTIONS BE LIABLE FOR ANY CLAIM, DAMAGES, BODILY INJURY, 
+     PROPERTY DAMAGE, SYSTEM MALFUNCTION, OR OTHER LIABILITY, WHETHER IN AN 
+     ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION 
+     WITH THE HARDWARE, FIRMWARE, BIO-POTENTIAL ELECTRODE INTERFACING, MOTOR 
+     ACTUATION, OR USE OF ANY MATERIALS PROVIDED HEREIN.
+   - Safety Responsibility: Any individual attempting hardware replication or testing 
+     assumes full responsibility for electrical isolation, power supply safety, 
+     subject protection, and compliance with institutional ethics protocols (IRB).
 
-For inquiries and permissions: rohitdubbaka29@gmail.com
+For permissions, inquiries, or collaborative access:
+Rohit Kumar Dubbaka
+Email: rohitdubbaka29@gmail.com

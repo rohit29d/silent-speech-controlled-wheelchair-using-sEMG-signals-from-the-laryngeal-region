@@ -4,7 +4,10 @@
 [![MCU Target](https://img.shields.io/badge/MCU-ARM%20Cortex--M7%20(STM32H753ZI)-blue?style=flat-square)](firmware/)
 [![ML Accuracy](https://img.shields.io/badge/Test%20Accuracy-88.01%25-brightgreen?style=flat-square)](ml_pipeline/)
 [![Cross-Val](https://img.shields.io/badge/3--Fold%20CV-84.45%25%20(±1.02%25)-blue?style=flat-square)](ml_pipeline/)
-[![License](https://img.shields.io/badge/License-Showcase%20%26%20Evaluation%20Only-red?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-Academic%20Research%20%26%20Evaluation-1f77b4?style=flat-square)](LICENSE)
+
+> **Academic Notice**: This repository documents undergraduate capstone thesis research conducted at Amrita School of Engineering (March 2026). A formal manuscript publication currently in progress. All materials are shared for admissions review and non-commercial academic evaluation. For collaborative research access or hardware replication inquiries, please contact the author.
+
 
 A complete end-to-end biomedical cyber-physical assistive system translating non-auditory surface electromyography (sEMG) bio-potentials from laryngeal musculature into real-time directional commands for an electric wheelchair. 
 
@@ -24,44 +27,11 @@ During silent articulation (mouthing navigation words without acoustic vocalizat
 +-------------------------------------------------------------------------------------------------------------------------+
 |                                                END-TO-END SYSTEM PIPELINE                                               |
 +-------------------------------------------------------------------------------------------------------------------------+
-                                                                                                                           
-   [ Physiological Signal ]              [ Analog Conditioning ]                     [ Data Acquisition & Preprocessing ]   
-    Submental & Laryngeal       Differential   +------------------------+  Single-Ended       +-------------------------+  
-   Musculature Activation   ---> Ag/AgCl   --->| Stage 1: INA (LM324)   |-------------------->| MCC USB-1808 (8 kHz)    |  
-    (Silent Mouthing /           Electrodes    | CMRR 100 dB, Gain 1001 |                     +-------------------------+  
-     Vocal Articulation)                       +------------------------+                                  |               
-                                                           |                                               v               
-                                                           v                                  +-------------------------+  
-                                               +------------------------+                     | Adaptive DWT (db6)      |  
-                                               | Stage 2: Active BPF    |                     | BayesShrink (+8.2dB SNR)|  
-                                               | 20-300 Hz Bessel (6th) |                     +-------------------------+  
-                                               +------------------------+                                  |               
-                                                           |                                               v               
-                                                           v                                  +-------------------------+  
-                                               +------------------------+                     | 4th-Order Butterworth   |  
-                                               | Stage 3: Notch Filter  |                     | Bandpass (20-350 Hz)    |  
-                                               | 50 Hz Twin-T Rejection |                     +-------------------------+  
-                                               +------------------------+                                  |               
-                                                                                                           v               
-+-------------------------------------------------------------------------------------------------------------------------+
-|                                                  DIGITAL INFERENCE & ACTUATION                                          |
-+-------------------------------------------------------------------------------------------------------------------------+
-                                                                                                                           
-   [ Feature Extraction ]                [ Decision & Classification ]                   [ Real-Time Embedded Control ]    
-  +-------------------------+           +------------------------------+     USART          +----------------------------+ 
-  | 32 Time / Frequency /   |   ANOVA   | Tuned Random Forest (100 T)  | (115200 Baud)      | STM32H753ZI (Cortex-M7)    | 
-  | Energy Descriptors      |---------->| Test Acc: 88.01%, F1: 88.03% |------------------->| - Non-blocking UART parser | 
-  +-------------------------+  Ranking  +------------------------------+  Command Byte      | - 500 ms safety watchdog   | 
-                                                       |                                    | - Ultrasonic safety reflex | 
-                                                       v                                    +----------------------------+ 
-                                        +------------------------------+                                   |               
-                                        | Adaptive RMS Gating (>2x NF) |                                   v PWM / DIR     
-                                        | 21-Frame Consensus (1050 ms) |                    +----------------------------+ 
-                                        +------------------------------+                    | Dual BTS7960 43A H-Bridges | 
-                                                                                            | High-Torque Wheelchair     | 
-                                                                                            +----------------------------+ 
 ```
 
+<p align="center">
+  <img src="media/system_setup.png" width="60%" alt="Complete system setup" />
+</p>
 ---
 
 ## 1. Hardware & Analog Front-End (AFE)
@@ -94,6 +64,9 @@ Laryngeal sEMG signals exhibit low amplitudes ($\approx 10\ \mu\text{V} - 500\ \
 <p align="center">
   <img src="media/AFE_breadboard.jpeg" width="60%" alt="Hardware Experimental Breadboard Bring-up" />
 </p>
+<p align="center">
+  <img src="media/sEMG_AFE_V2.1.kicad_pro_3D_perspective.png" width="50%" alt="sEMG signal acq AFE PCB" />
+</p>
 
 *Complete KiCad schematics, layouts, interactive BOM, and LTspice simulation models are organized in the [`hardware/`](hardware/) directory.*
 
@@ -115,7 +88,7 @@ Digitized at $f_s = 8\ \text{kHz}$ via a Measurement Computing USB-1808 DAQ (18-
 | Metric | Raw Acquired Signal | Post-Denoised Signal | Improvement |
 | :--- | :--- | :--- | :--- |
 | **Signal-to-Noise Ratio (SNR)** | **2.43 dB** | **10.63 dB** | **+8.20 dB gain** |
-| **Signal Morphology** | Heavy baseline drift & Gaussian noise | Clean contraction bursts with smooth envelope | Validated across 40 subjects |
+| **Signal Morphology** | Heavy baseline drift & Gaussian noise | Clean contraction bursts with smooth envelope | Validated across 60 subjects |
 
 <p align="center">
   <img src="media/samplesignal_timedomain.png" width="48%" alt="Time Domain sEMG Command Signal" />
@@ -128,7 +101,7 @@ Digitized at $f_s = 8\ \text{kHz}$ via a Measurement Computing USB-1808 DAQ (18-
 
 To ensure generalization across users while compensating for limited patient access, a comprehensive empirical dataset was acquired:
 
-* **Cohort**: **40 human participants** (36 males, 4 females, aged 19–22).
+* **Cohort**: **60 human participants** (36 males, 4 females, aged 19–22).
 * **Command Vocabulary**: 6 navigational directives: `FRONT`, `BACK`, `LEFT`, `RIGHT`, `START`, and `STOP`.
 * **Articulatory Modalities**: Both audible vocalization and completely silent mouthing (words mouthed without acoustic sound).
 * **Data Augmentation**: Applied exclusively to the 80% training partition using three random transformations:
@@ -289,36 +262,6 @@ Hands-Free-sEMG-based-speech-controlled-wheelchair/
 
 ---
 
-## 9. Replication & Getting Started
-
-### Hardware Simulation
-1. Open [LTspice](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html).
-2. Load any schematic in `hardware/simulations/` (e.g. `bessel_final_4th_order_bpf.asc` or `Notch.asc`).
-3. Run **Simulate $\rightarrow$ Run** to verify the AC transfer function, linear phase, and notch rejection.
-
-### Python Environment & Model Training
-```bash
-# Clone the repository
-git clone https://github.com/rohit29d/Hands-Free-sEMG-based-speech-controlled-wheelchair-.git
-cd Hands-Free-sEMG-based-speech-controlled-wheelchair-/ml_pipeline
-
-# Setup virtual environment
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# Run preprocessing, feature extraction & model training
-python run_pipeline.py
-```
-
-### Firmware Build & Flash
-1. Open **STM32CubeIDE** (v1.14+).
-2. Import the existing project from `firmware/stm32h7_controller/model_testing`.
-3. Connect an **STM32H753ZI Nucleo-144** development board via USB ST-LINK.
-4. Build target (`Project -> Build Project`) and flash the device.
-
----
-
 ## Technical Author & Academic Affiliation
 
 **Rohit Kumar Dubbaka**  
@@ -327,4 +270,4 @@ Amrita School of Engineering, Amrita Vishwa Vidyapeetham, Coimbatore
 *Collaborators*: Isukapalli Aditya, Harshath S  
 *Faculty Advisor*: Ms. L. Vidhya  
 *Email*: rohitdubbaka29@gmail.com | [LinkedIn](https://www.linkedin.com/in/rohit-kumar-dubbaka/) | [GitHub](https://github.com/rohit29d)  
-*Academic Status*: B.Tech Capstone Thesis (March 2026); Conference paper submitted (awaiting acceptance).
+*Academic Status*: B.Tech Capstone Thesis (March 2026).
